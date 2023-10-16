@@ -1024,7 +1024,8 @@ function get_plugin_root_id(): string {
   return String.UTF8.decode(root_id);
 }
 
-let root_context_factory_map = new Map<string, (context_id: u32) => RootContext>();
+const undefined_context_factory: (context_id: u32) => RootContext = (context_id: u32) => { return new RootContext(0); };
+let root_context_factory: (context_id: u32) => RootContext = undefined_context_factory;
 
 let context_map = new Map<u32, BaseContext>();
 
@@ -1036,13 +1037,11 @@ export function ensureRootContext(root_context_id: u32): RootContext {
     log(LogLevelValues.debug, "Returning root context for id: " + root_context_id.toString());
     return getRootContext(root_context_id);
   }
-  const root_id = get_plugin_root_id();
-  log(LogLevelValues.debug, "Registering new root context for " + root_id + " with id: " + root_context_id.toString());
-  if (!root_context_factory_map.has(root_id)) {
-    throw new Error("Missing root context factory for root id: " + root_id);
+  log(LogLevelValues.debug, "Registering new root context with id: " + root_context_id.toString());
+  if (root_context_factory == undefined_context_factory) {
+    throw new Error("Missing root context factory");
   }
-  const root_context_func = root_context_factory_map.get(root_id);
-  const root_context = root_context_func(root_context_id);
+  const root_context = root_context_factory(root_context_id);
   root_context.context_id = root_context_id;
   context_map.set(root_context_id, root_context);
   return root_context;
@@ -1078,12 +1077,12 @@ export function deleteContext(context_id: u32): void {
 }
 
 /**
- * Register a root context and make it available to the runtime.
+ * Register a root context factory and make it available to the runtime.
  * @param root_context_factory A function that creates a new root context.
- * @param name The name of the root context. This should match the name configured in the proxy.
+ * @param name Paremeter kept for backwards compatibility. It will be ignored.
  */
 export function registerRootContext(
-  root_context_factory: (context_id: u32) => RootContext,
+  context_factory: (context_id: u32) => RootContext,
   name: string): void {
-  root_context_factory_map.set(name, root_context_factory);
+  root_context_factory = context_factory;
 }
