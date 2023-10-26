@@ -1027,24 +1027,27 @@ function get_plugin_root_id(): string {
 const undefined_context_factory: (context_id: u32) => RootContext = (context_id: u32) => { return new RootContext(0); };
 let root_context_factory: (context_id: u32) => RootContext = undefined_context_factory;
 
-let context_map = new Map<u32, BaseContext>();
+let root_context: RootContext | null;
+let context_map = new Map<u32, Context>();
 
 //create root context if doesn't exist
 export function ensureRootContext(root_context_id: u32): RootContext {
   log(LogLevelValues.debug, "ensureRootContext(root_context_id: " + root_context_id.toString() + ")");
-  log(LogLevelValues.debug, "Current context_map: " + context_map.keys().join(", "));
-  if (context_map.has(root_context_id)) {
-    log(LogLevelValues.debug, "Returning root context for id: " + root_context_id.toString());
+  if (root_context != null) {
+    log(LogLevelValues.debug, "Returning root context");
     return getRootContext(root_context_id);
   }
+
   log(LogLevelValues.debug, "Registering new root context with id: " + root_context_id.toString());
   if (root_context_factory == undefined_context_factory) {
     throw new Error("Missing root context factory");
   }
-  const root_context = root_context_factory(root_context_id);
-  root_context.context_id = root_context_id;
-  context_map.set(root_context_id, root_context);
-  return root_context;
+
+  let context = root_context_factory(root_context_id);
+  context.context_id = root_context_id;
+  root_context = context;
+
+  return root_context as RootContext;
 }
 
 // create a context if doesnt exist.
@@ -1069,7 +1072,7 @@ export function getContext(context_id: u32): Context {
   return context_map.get(context_id) as Context;
 }
 export function getRootContext(context_id: u32): RootContext {
-  return context_map.get(context_id) as RootContext;
+  return root_context as RootContext;
 }
 
 export function deleteContext(context_id: u32): void {
