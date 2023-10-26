@@ -352,15 +352,15 @@ export function send_local_response(response_code: u32, response_code_details: s
 
 
 export function clear_route_cache(): WasmResultValues { return imports.proxy_clear_route_cache(); }
-class GetSharedData {
+export class GetSharedData {
   value: ArrayBuffer | null;
   result: WasmResultValues;
-  cas: usize;
+  cas: u32;
 }
 
 export function get_shared_data(key: string): GetSharedData {
   const key_buffer = String.UTF8.encode(key);
-  let cas = globalUsizeRef;
+  let cas = globalU32Ref;
   let data = globalArrayBufferReference;
   let result = new GetSharedData();
   result.result = imports.proxy_get_shared_data(changetype<usize>(key_buffer), key_buffer.byteLength, data.bufferPtr(), data.sizePtr(), cas.ptr());
