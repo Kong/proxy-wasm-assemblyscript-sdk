@@ -1,12 +1,12 @@
 
-export * from "@solo-io/proxy-runtime/assembly/proxy"; // this exports the required functions for the proxy to interact with us.
+export * from "@kong/proxy-wasm-sdk/assembly/proxy"; // this exports the required functions for the proxy to interact with us.
 
 import {
   RootContext, Context, BaseContext, registerRootContext,
   log, LogLevelValues, FilterHeadersStatusValues, FilterDataStatusValues,
   FilterTrailersStatusValues, GrpcStatusValues, WasmResultValues,
   stream_context, send_local_response, continue_request, get_buffer_bytes, BufferTypeValues
-} from "@solo-io/proxy-runtime/assembly";
+} from "@kong/proxy-wasm-sdk/assembly";
 
 class AuthRoot extends RootContext {
 

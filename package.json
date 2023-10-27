@@ -13,16 +13,16 @@
     "minimist": ">=1.2.2",
     "typedoc": "^0.16.11"
   },
-  "name": "@solo-io/proxy-runtime",
+  "name": "@kong/proxy-wasm-sdk",
   "description": "Use this SDK to write extensions for the proxy WASM ABI",
-  "version": "0.1.15",
+  "version": "0.0.2",
   "main": "assembly/index.ts",
   "directories": {
     "doc": "docs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/solo-io/proxy-runtime.git"
+    "url": "git+https://github.com/kong/proxy-wasm-sdk.git"
   },
   "keywords": [
     "wasm",
@@ -31,9 +31,9 @@
   "author": "Yuval Kohavi",
   "license": " Apache-2.0",
   "bugs": {
-    "url": "https://github.com/solo-io/proxy-runtime/issues"
+    "url": "https://github.com/kong/proxy-wasm-sdk/issues"
   },
-  "homepage": "https://github.com/solo-io/proxy-runtime#readme",
+  "homepage": "https://github.com/kong/proxy-wasm-sdk#readme",
   "files": [
     "/assembly",
     "package-lock.json",

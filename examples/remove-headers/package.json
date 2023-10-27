@@ -6,7 +6,7 @@
     "test": "node tests"
   },
   "dependencies": {
-    "@solo-io/proxy-runtime": "file:../.."
+    "@kong/proxy-wasm-sdk": "file:../.."
   },
   "devDependencies": {
     "assemblyscript": "^0.25.0"

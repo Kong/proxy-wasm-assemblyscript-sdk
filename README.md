@@ -16,12 +16,12 @@ add `--use abort=abort_proc_exit` to the `asc` in packages.json. for example:
     "asbuild:release": "asc assembly/index.ts -b build/optimized.wasm --use abort=abort_proc_exit -t build/optimized.wat --sourceMap --optimize",
 ```
 
-Add `"@solo-io/proxy-runtime": "file:/home/yuval/Projects/solo/proxy-assemblyscript"` to your dependencies.
+Add `"@kong/proxy-wasm-sdk": "file:/home/yuval/Projects/solo/proxy-assemblyscript"` to your dependencies.
 run `npm install`
 
 # using NPM
 
-Just include the `@solo-io/proxy-runtime` package.
+Just include the `@kong/proxy-wasm-sdk` package.
 
 # Hello, World
 
@@ -29,8 +29,8 @@ Just include the `@solo-io/proxy-runtime` package.
 Copy this into assembly/index.ts:
 
 ```ts
-export * from "@solo-io/proxy-runtime/proxy"; // this exports the required functions for the proxy to interact with us.
-import { RootContext, Context, registerRootContext, FilterHeadersStatusValues, stream_context } from "@solo-io/proxy-runtime";
+export * from "@kong/proxy-wasm-sdk/proxy"; // this exports the required functions for the proxy to interact with us.
+import { RootContext, Context, registerRootContext, FilterHeadersStatusValues, stream_context } from "@kong/proxy-wasm-sdk";
 
 class AddHeaderRoot extends RootContext {
   createContext(context_id: u32): Context {
