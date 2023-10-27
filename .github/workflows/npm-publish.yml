@@ -1,28 +1,18 @@
 name: npm-publish
 on:
-  push:
-    branches:
-      - master # Change this to your default branch
+  release:
+    types: [published]
 jobs:
-  npm-publish:
-    name: npm-publish
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2.1.0
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 16.17.0
-    - name: Publish if version has been updated
-      uses: pascalgn/npm-publish-action@4f4bf159e299f65d21cd1cbd96fc5d53228036df
-      with: # All of theses inputs are optional
-        tag_name: "v%s"
-        tag_message: "v%s"
-        # !! NOTE: For this action to work, the last commit MUST match this pattern!
-        # since we squash commits, this means the PR name MUST match this pattern
-        # for an example, see https://github.com/kong/proxy-wasm-sdk/pull/50
-        commit_pattern: "^Release (\\S+)"
-      env: # More info about the environment variables in the README
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} # You need to set this in your repo settings
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm publish --access public
+        if: ${{ !env.ACT }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_PUBLIC_PUBLISH }}
