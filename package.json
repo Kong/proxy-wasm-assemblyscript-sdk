@@ -15,14 +15,14 @@
   },
   "name": "@kong/proxy-wasm-sdk",
   "description": "Use this SDK to write extensions for the proxy WASM ABI",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "assembly/index.ts",
   "directories": {
     "doc": "docs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kong/proxy-wasm-sdk.git"
+    "url": "git+https://github.com/kong/proxy-wasm-as-sdk.git"
   },
   "keywords": [
     "wasm",

@@ -1,36 +1,41 @@
-How to use the SDK:
+# WebAssembly for Proxies (AssemblyScript SDK)
 
-
-# Local development
-Clone this repo to somewhere on disk.
+## How to use this SDK
 
 Create a new project:
+
 ```shell
+npm init
 npm install --save-dev assemblyscript
 npx asinit .
 ```
 
-add `--use abort=abort_proc_exit` to the `asc` in packages.json. for example:
-```json
-    "asbuild:debug": "asc assembly/index.ts -b build/untouched.wasm --use abort=abort_proc_exit -t build/untouched.wat --sourceMap http://127.0.0.1:8081/build/untouched.wasm.map --debug",
-    "asbuild:release": "asc assembly/index.ts -b build/optimized.wasm --use abort=abort_proc_exit -t build/optimized.wat --sourceMap --optimize",
+Include `"use": "abort=abort_proc_exit"` to the `asconfig.json` file as part of
+the options passed to `asc` compiler:
+```
+{
+  "options": {
+    "use": "abort=abort_proc_exit"
+  }
+}
 ```
 
-Add `"@kong/proxy-wasm-sdk": "file:/home/yuval/Projects/solo/proxy-assemblyscript"` to your dependencies.
-run `npm install`
+Add `"@kong/proxy-wasm-sdk": "0.0.3"` to your dependencies then run `npm install`.
 
-# using NPM
 
-Just include the `@kong/proxy-wasm-sdk` package.
+## Hello, World
 
-# Hello, World
-
-## Code
 Copy this into assembly/index.ts:
 
 ```ts
-export * from "@kong/proxy-wasm-sdk/proxy"; // this exports the required functions for the proxy to interact with us.
-import { RootContext, Context, registerRootContext, FilterHeadersStatusValues, stream_context } from "@kong/proxy-wasm-sdk";
+export * from "@kong/proxy-wasm-sdk/proxy";
+import {
+  RootContext,
+  Context,
+  registerRootContext,
+  FilterHeadersStatusValues,
+  stream_context
+} from "@kong/proxy-wasm-sdk";
 
 class AddHeaderRoot extends RootContext {
   createContext(context_id: u32): Context {
