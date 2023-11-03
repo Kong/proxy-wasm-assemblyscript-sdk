@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kong/proxy-wasm-as-sdk.git"
+    "url": "git+https://github.com/kong/proxy-wasm-assembly-script-sdk.git"
   },
   "keywords": [
     "wasm",
@@ -31,9 +31,9 @@
   "author": "Yuval Kohavi",
   "license": " Apache-2.0",
   "bugs": {
-    "url": "https://github.com/kong/proxy-wasm-sdk/issues"
+    "url": "https://github.com/kong/proxy-wasm-assembly-script-sdk/issues"
   },
-  "homepage": "https://github.com/kong/proxy-wasm-sdk#readme",
+  "homepage": "https://github.com/kong/proxy-wasm-assembly-script-sdk",
   "files": [
     "/assembly",
     "package-lock.json",
