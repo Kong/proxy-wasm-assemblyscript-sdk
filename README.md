@@ -1,5 +1,12 @@
 # WebAssembly for Proxies (AssemblyScript SDK)
 
+This is a friendly fork of https://github.com/solo-io/proxy-runtime/,
+temporarily mantained to address one incompatibility between the SDK and
+ngx_wasm_module.
+
+This fork should no longer be needed once that is handled in the upstream.
+
+
 ## How to use this SDK
 
 Create a new project:
