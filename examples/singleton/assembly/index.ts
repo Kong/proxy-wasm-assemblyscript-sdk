@@ -5,7 +5,7 @@ import {
   RootContext, Context, BaseContext, registerRootContext, Headers, makeHeaderPair, log,
   BufferTypeValues, LogLevelValues, FilterHeadersStatusValues, FilterDataStatusValues,
   FilterTrailersStatusValues, GrpcStatusValues, WasmResultValues, stream_context,
-  send_local_response, set_tick_period_milliseconds, get_buffer_bytes, set_shared_data, get_shared_data
+  send_http_response, set_tick_period_milliseconds, get_buffer_bytes, set_shared_data, get_shared_data
 } from "@kong/proxy-wasm-sdk/assembly";
 
 class AuthSingleton extends RootContext {
@@ -95,7 +95,7 @@ class Auth extends Context {
       return FilterHeadersStatusValues.Continue;
     }
 
-    send_local_response(401, "not authorized", new ArrayBuffer(0), [], GrpcStatusValues.Internal);
+    send_http_response(401, "not authorized", new ArrayBuffer(0), []);
 
     return FilterHeadersStatusValues.StopIteration;
   }

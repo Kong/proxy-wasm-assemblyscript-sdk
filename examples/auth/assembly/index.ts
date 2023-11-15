@@ -5,7 +5,7 @@ import {
   RootContext, Context, BaseContext, registerRootContext,
   log, LogLevelValues, FilterHeadersStatusValues, FilterDataStatusValues,
   FilterTrailersStatusValues, GrpcStatusValues, WasmResultValues,
-  stream_context, send_local_response, continue_request, get_buffer_bytes, BufferTypeValues
+  stream_context, send_http_response, continue_request, get_buffer_bytes, BufferTypeValues
 } from "@kong/proxy-wasm-sdk/assembly";
 
 class AuthRoot extends RootContext {
@@ -63,14 +63,14 @@ class Auth extends Context {
           continue_request();
         } else {
           // we are denied, send a local response indicating that.
-          send_local_response(401, "not authorized", new ArrayBuffer(0), [], GrpcStatusValues.Unauthenticated);
+          send_http_response(401, "not authorized", new ArrayBuffer(0), []);
         }
       });
 
     if (result != WasmResultValues.Ok) {
       log(LogLevelValues.debug, "auth failed http call: " + result.toString());
 
-      send_local_response(500, "internal server error", new ArrayBuffer(0), [], GrpcStatusValues.Internal);
+      send_http_response(500, "internal server error", new ArrayBuffer(0), []);
 
       return FilterHeadersStatusValues.StopIteration;
     }

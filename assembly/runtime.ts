@@ -341,13 +341,34 @@ function deserializeHeaders(headers: ArrayBuffer): Headers {
 }
 
 export function continue_request(): WasmResultValues { return imports.proxy_continue_stream(StreamTypeValues.Request); }
+
 export function continue_response(): WasmResultValues { return imports.proxy_continue_stream(StreamTypeValues.Response); }
+
 export function send_local_response(response_code: u32, response_code_details: string, body: ArrayBuffer,
   additional_headers: Headers, grpc_status: GrpcStatusValues): WasmResultValues {
   let response_code_details_buffer = String.UTF8.encode(response_code_details);
   let headers = serializeHeaders(additional_headers);
   return imports.proxy_send_local_response(response_code, changetype<usize>(response_code_details_buffer), response_code_details_buffer.byteLength,
     changetype<usize>(body), body.byteLength, changetype<usize>(headers), headers.byteLength, grpc_status);
+}
+
+export function send_http_response(
+  response_code: u32,
+  response_code_details: string,
+  body: ArrayBuffer,
+  additional_headers: Headers): WasmResultValues {
+  let response_code_details_buffer = String.UTF8.encode(response_code_details);
+  let headers = serializeHeaders(additional_headers);
+
+  return imports.proxy_send_local_response(
+    response_code,
+    changetype<usize>(response_code_details_buffer),
+    response_code_details_buffer.byteLength,
+    changetype<usize>(body),
+    body.byteLength,
+    changetype<usize>(headers),
+    headers.byteLength,
+    -1);
 }
 
 
