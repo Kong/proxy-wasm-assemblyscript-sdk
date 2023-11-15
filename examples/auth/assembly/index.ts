@@ -40,7 +40,7 @@ class Auth extends Context {
       this,
       // http callback: called when there's a response. if the request failed, headers will be 0
       (origin_context: BaseContext, headers: u32, body_size: usize, trailers: u32) => {
-        let context = origin_context as Auth;
+        let context = changetype<Auth>(origin_context);
         let allow = false;
 
         if (headers != 0) {
