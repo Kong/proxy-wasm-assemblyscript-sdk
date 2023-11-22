@@ -1,6 +1,5 @@
 import * as imports from "./imports";
 import { free } from "./malloc";
-import { proc_exit } from "./wasi_unstable";
 
 // abort function.
 // use with:
@@ -17,7 +16,6 @@ import { proc_exit } from "./wasi_unstable";
     logMessage += " at: " + fileName.toString() + "(" + lineNumber.toString() + ":" + columnNumber.toString() + ")";
   }
   log(LogLevelValues.critical, logMessage);
-  proc_exit(255);
 }
 
 function CHECK_RESULT(c: imports.WasmResult): void {

@@ -94,11 +94,6 @@
         // Fetch and instantiate the module
         // instantiateStreaming so that source map is fetched automatically.
         const wasmmodule = await WebAssembly.instantiateStreaming(fetch("/build/untouched.wasm"), {
-          wasi_unstable: {
-            proc_exit(retval) {
-              throw new Error("proc exit");
-            }
-          },
           env: {
             memory,
             abort(_msg, _file, line, column) {
