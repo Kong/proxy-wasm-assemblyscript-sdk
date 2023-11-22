@@ -27,7 +27,7 @@ the options passed to `asc` compiler:
 }
 ```
 
-Add `"@kong/proxy-wasm-sdk": "0.0.5"` to your dependencies then run `npm install`.
+Add `"@kong/proxy-wasm-sdk": "0.0.6"` to your dependencies then run `npm install`.
 
 
 ## Hello, World
