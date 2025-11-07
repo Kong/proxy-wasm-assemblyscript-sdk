@@ -15,8 +15,10 @@ jobs:
       uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
       with:
         node-version: '24.x'
-    - run: npm install
-    - run: npm run asbuild
+    - run: |
+        npm --version
+        npm install
+        npm run asbuild
     # make sure example filter builds:
     - run: cd examples/auth && npm install && npm run asbuild
     - run: cd examples/addheader && npm install && npm run asbuild
